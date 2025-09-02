@@ -36,6 +36,16 @@ if [ ! -f "${HOME}/.zshrc" ]; then
   ln -s "$(pwd)/zshrc" "${HOME}/.zshrc"
 fi
 
-echo "HINT: $ chsh -s /usr/bin/zsh"
-
 zsh -l -i -c 'uname -a'
+
+echo ""
+echo ""
+echo "HINT: Follow these command to change shell."
+echo ""
+if [ "$(whoami)" == "root" ]; then
+  echo "  $ chsh -s $(command -v zsh)"
+else
+  echo "  $ sudo usermod -s $(command -v zsh) $(whoami)"
+  echo "  $ chsh -s $(command -v zsh)"
+fi
+echo ""
