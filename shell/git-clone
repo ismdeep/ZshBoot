@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Usage: git-clone <gir-url> <branch>
+
+set -e
+
+url="${1:?}"
+sub_path=$(echo "${url}" | sed 's+https://++g' | sed 's+http://++g' | sed 's+git@++g' | sed 's+:+/+g')
+# 如果字符串以 ".git" 结尾，则删除
+if [[ "${sub_path}" == *".git" ]]; then
+  sub_path="${sub_path%.git}"
+fi
+sub_path="${sub_path//\//_}/$(basename "${sub_path}")"
+
+########################## dry run ##########################
+case "${IS_DRY_RUN}" in
+true | yes)
+  echo -e '\n\n\n\n\n'
+  echo "        PATH: ${sub_path}"
+  echo -e '\n\n\n\n\n'
+  exit 0
+  ;;
+esac
+
+########################## real run ##########################
+
+if [ "${GIT_CLONE_ROOT}" == "" ]; then
+  export GIT_CLONE_ROOT="${HOME}/Projects"
+fi
+repo_path="${GIT_CLONE_ROOT}/${sub_path}"
+if [ -d "${repo_path}" ]; then
+  echo "[ERROR] git clone target directory is not empty: ${repo_path}"
+  exit 1
+fi
+git clone "${url}" "${repo_path}"
+echo ""
+echo "  Repo has been cloned into ${repo_path}"
+echo ""

@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
 #################### DO NOT EDIT THIS SECTION ####################
+zshboot_root="${HOME}/ZshBoot"
+
+if [ ! -d "${zshboot_root}" ]; then
+  echo "[ERROR] directory not exists: ${zshboot_root}" && echo "[HINT] shell will exit after 10s ..." && sleep 10 && exit 1
+fi
+
+# export shell
+export PATH="${zshboot_root}/shell:${PATH}"
+
 # timezone
 export TZ=Asia/Shanghai
 
@@ -18,6 +27,12 @@ ZSH_THEME="ys"
 plugins=(git zsh-autosuggestions)
 source "${ZSH}/oh-my-zsh.sh"
 TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
+
+# aliases
+alias tmp='cd $(tmpdir-in-home.sh)'
+alias gs="git status -u"
+alias dateh="date +%Y-%m-%d-%H%M%S"
+alias datetag="date '+%Y%m%d%H%M%S'"
 
 # Load .zshboot_custom_rc
 if [ -f "${HOME}/.zshboot_custom_rc" ]; then
