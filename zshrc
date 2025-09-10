@@ -37,5 +37,7 @@ alias datetag="date '+%Y%m%d%H%M%S'"
 # Load .zshboot_custom_rc
 if [ -f "${HOME}/.zshboot_custom_rc" ]; then
   source "${HOME}/.zshboot_custom_rc"
+else
+  touch "${HOME}/.zshboot_custom_rc"
 fi
 #################### DO NOT EDIT THIS SECTION ####################
