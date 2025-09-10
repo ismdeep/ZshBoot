@@ -5,7 +5,7 @@
 set -e
 
 url="${1:?}"
-sub_path=$(echo "${url}" | sed 's+https://++g' | sed 's+http://++g' | sed 's+git@++g' | sed 's+:+/+g')
+sub_path=$(echo "${url}" | sed 's+https://++g' | sed 's+http://++g' | sed 's+git@++g' | sed 's+:+/+g' | sed 's+@+_+g')
 # 如果字符串以 ".git" 结尾，则删除
 if [[ "${sub_path}" == *".git" ]]; then
   sub_path="${sub_path%.git}"
