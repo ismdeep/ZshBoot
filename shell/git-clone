@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Usage: git-clone <gir-url> <branch>
+# Usage: git-clone <git-url>
 
 set -e
 
@@ -21,6 +21,13 @@ true | yes)
   exit 0
   ;;
 esac
+
+########################## git url mapper ##########################
+if [ -f "${HOME}/.git-url-mapper.json" ]; then
+  # 检查命令是否存在
+  command -v git-url-mapper >/dev/null 2>&1 || (echo "[ERROR] command required: git-url-mapper" && false)
+  url="$(git-url-mapper "${url}")"
+fi
 
 ########################## real run ##########################
 
