@@ -2,6 +2,7 @@
 
 #################### DO NOT EDIT THIS SECTION ####################
 zshboot_root="${HOME}/ZshBoot"
+export ZSHBOOT_ROOT="${zshboot_root}"
 
 if [ ! -d "${zshboot_root}" ]; then
   echo "[ERROR] directory not exists: ${zshboot_root}" && echo "[HINT] shell will exit after 10s ..." && sleep 10 && exit 1
@@ -35,9 +36,10 @@ alias dateh="date +%Y-%m-%d-%H%M%S"
 alias datetag="date '+%Y%m%d%H%M%S'"
 
 # Load .zshboot_custom_rc
-if [ -f "${HOME}/.zshboot_custom_rc" ]; then
-  source "${HOME}/.zshboot_custom_rc"
-else
+if [ ! -f "${HOME}/.zshboot_custom_rc" ]; then
   touch "${HOME}/.zshboot_custom_rc"
+  cat "${ZSHBOOT_ROOT:?}/example/zshboot_custom_rc" > "${HOME}/.zshboot_custom_rc"
 fi
+
+source "${HOME}/.zshboot_custom_rc"
 #################### DO NOT EDIT THIS SECTION ####################
