@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if [ ! -f "${HOME}/.x98/runtime/node-${1:?}/node/bin/node" ]; then
-  command -v pv  >/dev/null 2>&1 || (echo "$(date -R) [ ERROR ] command required: pv"  && false) && \
-  command -v xz  >/dev/null 2>&1 || (echo "$(date -R) [ ERROR ] command required: xz"  && false) && \
-  command -v tar >/dev/null 2>&1 || (echo "$(date -R) [ ERROR ] command required: tar" && false) && \
+  (command -v pv  >/dev/null 2>&1 || (echo "$(date -R) [ ERROR ] command required: pv"  && false)) && \
+  (command -v xz  >/dev/null 2>&1 || (echo "$(date -R) [ ERROR ] command required: xz"  && false)) && \
+  (command -v tar >/dev/null 2>&1 || (echo "$(date -R) [ ERROR ] command required: tar" && false)) && \
   node_version="${1:?}" && \
   echo "$(date -R) [ INFO ] nodejs ${node_version} is installing ..." && \
   rm -r -f "${HOME}/.x98/runtime/node-${1:?}/" && \
@@ -14,7 +14,7 @@ if [ ! -f "${HOME}/.x98/runtime/node-${1:?}/node/bin/node" ]; then
     Linux-arm64|Linux-aarch64)   file_name="node-${node_version}-linux-arm64"  ;;
     Darwin-amd64|Darwin-x86_64)  file_name="node-${node_version}-darwin-x64"   ;;
     Darwin-arm64|Darwin-aarch64) file_name="node-${node_version}-darwin-arm64" ;;
-    *) echo "ERROR: unsupported platform. [$(uname -s)-$(uname -m)]"  && false
+    *) echo "ERROR: unsupported platform. [$(uname -s)-$(uname -m)]" && false  ;;
   esac && \
   (
     cd "${HOME}/.x98/runtime/node-${1:?}/" && \
