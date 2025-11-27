@@ -4,11 +4,11 @@
 #    <go-version> example:
 #      - go1.20.12
 
-if [ ! -f "${HOME}/.x98/runtime/${1:?}/go/bin/go" ]; then
+if [ ! -f "${HOME}/Applications/${1:?}/go/bin/go" ]; then
   go_version="${1:?}" && \
   echo "$(date -R) [ INFO ] ${go_version} is installing ..." && \
-  rm    -r -f "${HOME}/.x98/runtime/${go_version}/" && \
-  mkdir -p    "${HOME}/.x98/runtime/${go_version}/" && \
+  rm    -r -f "${HOME}/Applications/${go_version}/" && \
+  mkdir -p    "${HOME}/Applications/${go_version}/" && \
   # get file name
   file_name="" && \
   case $(uname -s)-$(uname -m) in
@@ -20,17 +20,19 @@ if [ ! -f "${HOME}/.x98/runtime/${1:?}/go/bin/go" ]; then
   esac && \
   # download and extract
   (
-    cd "${HOME}/.x98/runtime/${go_version}/" && \
+    cd "${HOME}/Applications/${go_version}/" && \
     curl \
       --fail \
       --location \
       --output "${file_name}" \
       "https://dl.google.com/go/${file_name}" && \
-    echo "$(date -R) [ INFO ] ${go_version} downloaded at ${HOME}/.x98/runtime/${go_version}/${file_name}" && \
+    echo "$(date -R) [ INFO ] ${go_version} downloaded at ${HOME}/Applications/${go_version}/${file_name}" && \
     tar -zxf "${file_name}"
   ) && \
-  mkdir -p "${HOME}/.x98/runtime/${go_version}/path/"
+  mkdir -p "${HOME}/Applications/${go_version}/path/" && \
+  mkdir -p "${HOME}/Applications/${go_version}/cache/"
 fi && \
-export GOROOT="${HOME}/.x98/runtime/${1:?}/go" && \
-export GOPATH="${HOME}/.x98/runtime/${1:?}/path" && \
+export GOROOT="${HOME}/Applications/${1:?}/go" && \
+export GOPATH="${HOME}/Applications/${1:?}/path" && \
+export GOCACHE="${HOME}/Applications/${1:?}/cache" && \
 export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
