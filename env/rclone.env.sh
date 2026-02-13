@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
+# Usage: bash rclone.env.sh <rclone-version>
+#    <rclone-version> example:
+#      - v1.73.0
+#
 # https://github.com/rclone/rclone/releases/download/v1.73.0/rclone-v1.73.0-osx-amd64.zip
 # https://github.com/rclone/rclone/releases/download/v1.73.0/rclone-v1.73.0-osx-arm64.zip
 # https://github.com/rclone/rclone/releases/download/v1.73.0/rclone-v1.73.0-linux-amd64.zip
 # https://github.com/rclone/rclone/releases/download/v1.73.0/rclone-v1.73.0-linux-arm64.zip
-# Usage: bash rclone.env.sh <rclone-version>
-#    <rclone-version> example:
-#      - v1.73.0
 
 if [ ! -f "${HOME:?}/Applications/rclone-${1:?}/rclone" ]; then
   rclone_version="${1:?}" && \
