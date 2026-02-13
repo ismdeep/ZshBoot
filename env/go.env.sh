@@ -4,11 +4,11 @@
 #    <go-version> example:
 #      - go1.20.12
 
-if [ ! -f "${HOME}/Applications/${1:?}/go/bin/go" ]; then
+if [ ! -f "${HOME:?}/Applications/${1:?}/go/bin/go" ]; then
   go_version="${1:?}" && \
-  echo "$(date -R) [ INFO ] ${go_version} is installing ..." && \
-  rm    -r -f "${HOME}/Applications/${go_version}/" && \
-  mkdir -p    "${HOME}/Applications/${go_version}/" && \
+  echo "$(date -R) [ INFO ] ${go_version:?} is installing ..." && \
+  rm    -r -f "${HOME:?}/Applications/${go_version:?}/" && \
+  mkdir -p    "${HOME:?}/Applications/${go_version:?}/" && \
   # get file name
   file_name="" && \
   case $(uname -s)-$(uname -m) in
@@ -30,7 +30,8 @@ if [ ! -f "${HOME}/Applications/${1:?}/go/bin/go" ]; then
     tar -zxf "${file_name}"
   ) && \
   mkdir -p "${HOME}/Applications/${go_version}/path/" && \
-  mkdir -p "${HOME}/Applications/${go_version}/cache/"
+  mkdir -p "${HOME}/Applications/${go_version}/cache/" && \
+  echo "$(date -R) [ INFO ] ${go_version} installed."
 fi && \
 export GOROOT="${HOME}/Applications/${1:?}/go" && \
 export GOPATH="${HOME}/Applications/${1:?}/path" && \
