@@ -38,7 +38,7 @@ port="${2:?}"
 
 while true; do
   start_time=$(date +%s.%N)
-  if nc -vz -w 2 "${target}" "${port}" >/dev/null 2>&1; then
+  if nc -z "${target}" "${port}" >/dev/null 2>&1; then
     end_time=$(date +%s.%N)
     duration=$(echo "$end_time - $start_time" | bc -l | xargs printf "%.3f")
     log_passed "${target}:${port} (${duration}s)"
@@ -49,3 +49,4 @@ while true; do
   fi
   sleep 1s
 done
+
