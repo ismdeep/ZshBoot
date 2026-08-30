@@ -33,7 +33,7 @@ if [ ! -f "${HOME:?}/Applications/${1:?}/go/bin/go" ]; then
   mkdir -p "${HOME}/Applications/${go_version}/cache/" && \
   echo "$(date -R) [ INFO ] ${go_version} installed."
 fi && \
-export GOROOT="${HOME}/Applications/${1:?}/go" && \
-export GOPATH="${HOME}/Applications/${1:?}/path" && \
-export GOCACHE="${HOME}/Applications/${1:?}/cache" && \
-export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
+export GOROOT="${HOME:?}/Applications/${1:?}/go" && \
+export GOPATH="${HOME:?}/Applications/${1:?}/path" && \
+export GOCACHE="${HOME:?}/Applications/${1:?}/cache" && \
+export PATH="${GOROOT:?}/bin:${GOPATH:?}/bin:${PATH:?}"
