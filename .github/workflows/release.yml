@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Create archive
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Tags may contain '/', which is valid in a tag name but not useful
+          # as a path component for the generated asset.
+          safe_tag="${GITHUB_REF_NAME//\//-}"
+          archive_name="${GITHUB_REPOSITORY##*/}-${safe_tag}.tar.gz"
+          archive_path="${RUNNER_TEMP}/${archive_name}"
+
+          # Archive the complete checked-out directory, while keeping Git's
+          # internal metadata out of the release artifact.
+          tar --exclude='./.git' -czf "${archive_path}" -C "${GITHUB_WORKSPACE}" .
+          cp "${archive_path}" "${GITHUB_WORKSPACE}/${archive_name}"
+          echo "archive_name=${archive_name}" >> "${GITHUB_ENV}"
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" "${archive_name}" --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" "${archive_name}" \
+              --title "${GITHUB_REF_NAME}" \
+              --generate-notes
+          fi
