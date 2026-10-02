@@ -19,7 +19,7 @@ command_check tar
 
 if [ ! -d "${HOME}/.oh-my-zsh/" ]; then
   tmpdir="$(mktemp -d)"
-  cp "./build/ohmyzsh.tar.xz" "${tmpdir:?}/"
+  cp "./vendor/ohmyzsh.tar.xz" "${tmpdir:?}/"
   (cd "${tmpdir:?}/" && < ohmyzsh.tar.xz xz -cdk - | tar -x)
   mv "${tmpdir:?}/ohmyzsh/" "${HOME}/.oh-my-zsh/"
 fi
@@ -27,7 +27,7 @@ fi
 if [ ! -d "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions/" ]; then
   mkdir -p "${HOME}/.oh-my-zsh/custom/plugins/"
   tmpdir="$(mktemp -d)"
-  cp "./build/zsh-autosuggestions.tar.xz" "${tmpdir:?}/"
+  cp "./vendor/zsh-autosuggestions.tar.xz" "${tmpdir:?}/"
   (cd "${tmpdir:?}/" && < zsh-autosuggestions.tar.xz xz -cdk - | tar -x)
   mv "${tmpdir:?}/zsh-autosuggestions/" "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions/"
 fi
