@@ -6,3 +6,8 @@ help:
 .PHONY: build
 build:
 	bash build.sh
+
+# `make vendor`
+.PHONY: vendor
+vendor:
+	bash vendor.sh all

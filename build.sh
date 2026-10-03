@@ -16,6 +16,7 @@ rsync -a -r --no-i-r -i --no-owner --no-group --no-perms \
   --exclude=/Makefile \
   --exclude=/build.sh \
   --exclude=/build/ \
+  --exclude=/vendor.sh \
   ./ ./build/ZshBoot/
 
 echo "[ INFO ] compress build/ZshBoot-${safe_tag}.zip ..."
