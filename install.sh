@@ -65,10 +65,14 @@ zsh-autosuggestions)
     "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions/"
   ;;
 zshboot)
-  log_info "+ copy ZshBoot to ${HOME:?}/ZshBoot/ ..."
-  rsync -a -r --no-owner --no-group --no-perms --delete \
-    ./ \
-    "${HOME:?}/ZshBoot/"
+  if [ "$(pwd)" != "${HOME:?}/ZshBoot" ]; then
+    log_info "+ copy ZshBoot to ${HOME:?}/ZshBoot/ ..."
+    rsync -a -r --no-owner --no-group --no-perms --delete \
+      ./ \
+      "${HOME:?}/ZshBoot/"
+  else
+    log_info "skip copy ZshBoot to ${HOME:?}/ZshBoot/ due source directory and target directory are same."
+  fi
   ;;
 zshrc)
   log_info "+ copy zshrc to ${HOME}/.zshrc ..."
