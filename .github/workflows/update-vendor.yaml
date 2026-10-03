@@ -10,7 +10,7 @@ on:
 
 jobs:
   update-data:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
