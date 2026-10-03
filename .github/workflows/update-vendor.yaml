@@ -1,0 +1,35 @@
+name: Update Vendor
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Update vendor
+        run: make vendor
+
+      - name: Push back
+        if: env.BRANCH_NAME == 'main'
+        run: |
+          if [ "$$(git status --short | wc -l)" != "0" ]; then \
+          	git config user.name "L. Jiang" && \
+          	git config user.email "l.jiang.1024@gmail.com" && \
+          	git add . && \
+          	git commit -am "chore: update vendor via github workflow" && \
+          	git push origin HEAD:main; \
+          fi
