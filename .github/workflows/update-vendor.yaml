@@ -32,4 +32,6 @@ jobs:
           	git add . && \
           	git commit -am "chore: update vendor via github workflow" && \
           	git push origin HEAD:main; \
+          else \
+            echo "[ HINT ] skip git push back due nothing changed."; \
           fi
